@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import axios from "axios"
 import { fadeInUp, staggerContainer } from '../motionPresets'
+import { motion } from "framer-motion"
+
 
 const ProjectDetail = () => {
   const { id } = useParams()
