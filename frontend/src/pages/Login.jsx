@@ -9,7 +9,7 @@ import React from 'react'
 const Login = () => {
   const handleGithubLogin = () => {
     // Redirect to backend OAuth endpoint
-    window.location.href = 'https://dev-trial-7mpp.onrender.com/api/auth/github'
+    window.location.href = `https://dev-trial-7mpp.onrender.com/api/auth/github`
   }
 
   const title = 'Dev‑Trial'
