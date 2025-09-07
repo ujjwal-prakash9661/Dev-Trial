@@ -233,7 +233,20 @@ const ProjectDetail = () => {
               </h3>
               {!isEditing ? (
                 <div className="mt-3 flex items-center gap-3">
-                  {project.teamMembers && project.teamMembers.length > 0 ? (
+                  {project.rawTeamMembers && project.rawTeamMembers.length > 0 ? (
+                    project.rawTeamMembers.map((member, i) => (
+                      <img
+                        key={member._id || i}
+                        className="h-10 w-10 rounded-full ring-2 ring-white"
+                        src={
+                          member?.avatarUrl
+                            ? member.avatarUrl
+                            : `https://i.pravatar.cc/64?u=${member?._id || member}`
+                        }
+                        alt={member?.username || "member"}
+                      />
+                    ))
+                  ) : project.teamMembers && project.teamMembers.length > 0 ? (
                     project.teamMembers.map((member, i) => (
                       <img
                         key={member._id || i}
