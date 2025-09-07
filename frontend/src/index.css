@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+/* Global tweaks to match the clean, soft UI from screenshots */
+:root {
+  color-scheme: light;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-gray-50 text-gray-900 antialiased;
+}
+
+/********************
+ Utility helpers
+********************/
+.shadow-soft {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
