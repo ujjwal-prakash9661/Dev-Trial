@@ -18,6 +18,7 @@ const ProjectDetail = () => {
     priority: "Low",
     progress: 0,
     status: "In Progress",
+    teamMembersString: "",
   })
 
   useEffect(() => {
@@ -37,6 +38,9 @@ const ProjectDetail = () => {
           priority: p?.priority || "Low",
           progress: Number(p?.progress || 0),
           status: p?.status || "In Progress",
+          teamMembersString: Array.isArray(p?.teamMembers) && p.teamMembers.length > 0
+            ? p.teamMembers.map(m => (m?._id || m)).join(', ')
+            : "",
         })
       } catch (err) {
         console.log("Error fetching project!", err)
@@ -123,6 +127,9 @@ const ProjectDetail = () => {
                       priority: project.priority || "Low",
                       progress: Number(project.progress || 0),
                       status: project.status || "In Progress",
+                      teamMembersString: Array.isArray(project.teamMembers) && project.teamMembers.length > 0
+                        ? project.teamMembers.map(m => (m?._id || m)).join(', ')
+                        : "",
                     })
                   }}
                 >
@@ -143,14 +150,30 @@ const ProjectDetail = () => {
                           Math.min(100, Number(formDraft.progress))
                         ),
                         status: formDraft.status,
+                        // Allow editing team members with comma-separated IDs
+                        teamMembers: formDraft.teamMembersString
+                          ? formDraft.teamMembersString
+                              .split(',')
+                              .map(s => s.trim())
+                              .filter(Boolean)
+                          : [],
                       }
                       const res = await axios.put(
                         `https://dev-trial-1.onrender.com/api/projects/${id}`,
                         payload,
                         { withCredentials: true }
                       )
-                      setProject(res.data?.project || { ...project, ...payload })
-                      setIsEditing(false)
+                      // Ensure we stay on the same detail route and refresh data from server
+                      const updated = res.data?.project
+                      if (updated?._id) {
+                        navigate(`/projects/${updated._id}`, { replace: true })
+                        // Refetch latest after navigation
+                        setTimeout(() => window.location.reload(), 0)
+                      } else {
+                        // Fallback: update local state
+                        setProject({ ...project, ...payload })
+                        setIsEditing(false)
+                      }
                     } catch (err) {
                       console.error("Failed to save changes", err)
                       alert("Failed to save changes")
@@ -208,26 +231,38 @@ const ProjectDetail = () => {
               <h3 className="text-sm font-semibold text-gray-900">
                 Team Members
               </h3>
-              <div className="mt-3 flex items-center gap-3">
-                {project.teamMembers && project.teamMembers.length > 0 ? (
-                  project.teamMembers.map((member, i) => (
-                    <img
-                      key={member._id || i}
-                      className="h-10 w-10 rounded-full ring-2 ring-white"
-                      src={
-                        member?.avatarUrl
-                          ? member.avatarUrl
-                          : `https://i.pravatar.cc/64?u=${member?._id || member}`
-                      }
-                      alt={member?.username || "member"}
-                    />
-                  ))
-                ) : (
-                  <p className="text-sm text-gray-500">
-                    No team members yet.
-                  </p>
-                )}
-              </div>
+              {!isEditing ? (
+                <div className="mt-3 flex items-center gap-3">
+                  {project.teamMembers && project.teamMembers.length > 0 ? (
+                    project.teamMembers.map((member, i) => (
+                      <img
+                        key={member._id || i}
+                        className="h-10 w-10 rounded-full ring-2 ring-white"
+                        src={
+                          member?.avatarUrl
+                            ? member.avatarUrl
+                            : `https://i.pravatar.cc/64?u=${member?._id || member}`
+                        }
+                        alt={member?.username || "member"}
+                      />
+                    ))
+                  ) : (
+                    <p className="text-sm text-gray-500">
+                      No team members yet.
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <div className="mt-3">
+                  <input
+                    className="w-full rounded border border-gray-300 p-2 text-sm outline-none focus:ring-2 focus:ring-red-300"
+                    placeholder="Team member IDs (comma-separated)"
+                    value={formDraft.teamMembersString}
+                    onChange={(e) => setFormDraft(v => ({ ...v, teamMembersString: e.target.value }))}
+                  />
+                  <p className="mt-1 text-xs text-gray-500">Example: 665a..., 665b... | Leave empty to clear members.</p>
+                </div>
+              )}
             </div>
 
             <div className="mt-8">

@@ -97,7 +97,7 @@ async function createProject(req, res)
 async function updateProject(req, res)
 {
     const { id } = req.params
-    let { title, description, details, dueDate, priority, progress, status, color, startDate } = req.body
+    let { title, description, details, dueDate, priority, progress, status, color, startDate, teamMembers } = req.body
 
     // Build update object only with provided fields
     const update = {}
@@ -110,6 +110,20 @@ async function updateProject(req, res)
     if (status !== undefined) update.status = status
     if (color !== undefined) update.color = color
     if (startDate !== undefined) update.startDate = startDate
+
+    // Normalize teamMembers if provided (accept array or comma-separated string)
+    if (teamMembers !== undefined) {
+        if (Array.isArray(teamMembers)) {
+            update.teamMembers = teamMembers
+        } else if (typeof teamMembers === 'string') {
+            update.teamMembers = teamMembers
+                .split(',')
+                .map(s => s.trim())
+                .filter(Boolean)
+        } else {
+            update.teamMembers = []
+        }
+    }
 
     if (Object.keys(update).length === 0)
     {
