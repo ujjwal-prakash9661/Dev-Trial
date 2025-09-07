@@ -269,7 +269,7 @@ const Navbar = ({ brand = 'Dev-Trial', showSearch = false }) => {
                   onClick={async () => {
                     try {
                       await axios.post('https://dev-trial-1.onrender.com/api/auth/logout', {}, { withCredentials: true })
-                      window.location.href = 'http://localhost:5173/'
+                      window.location.href = 'https://dev-trial-1.onrender.com/login'
                     } catch (_) {}
                   }}
                   className="w-full cursor-pointer rounded px-2 py-2 text-left text-sm text-red-600 hover:bg-red-50"

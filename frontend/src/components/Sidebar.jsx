@@ -55,7 +55,7 @@ const Sidebar = () => {
             onClick={async () => {
               try {
                 await axios.post('https://dev-trial-1.onrender.com/api/auth/logout', {}, { withCredentials: true })
-                window.location.href = 'http://localhost:5173/'
+                window.location.href = 'https://dev-trial-1.onrender.com/login'
               } catch (_) {}
             }}
             className="ml-auto cursor-pointer rounded border border-gray-200 px-2 py-1 text-xs hover:bg-gray-100"
