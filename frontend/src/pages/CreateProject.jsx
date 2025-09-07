@@ -32,7 +32,7 @@ const CreateProject = () => {
   useEffect(() => {
     const loadTeams = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/api/teams', { withCredentials: true })
+        const res = await axios.get('https://dev-trial-7mpp.onrender.com/api/teams', { withCredentials: true })
         setAvailableTeams(res.data?.teams || [])
       } catch (e) {
         if (e?.response?.status !== 404) console.error('Failed to load teams', e)
@@ -78,7 +78,7 @@ const CreateProject = () => {
 
     try {
       setSubmitting(true)
-      await axios.post('http://localhost:3000/api/projects', payload, {
+      await axios.post('https://dev-trial-7mpp.onrender.com/api/projects', payload, {
         withCredentials: true
       })
       navigate('/projects')

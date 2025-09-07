@@ -187,8 +187,8 @@ const Teams = () => {
     const fetchAll = async () => {
       try {
         const [tRes, pRes] = await Promise.all([
-          axios.get('http://localhost:3000/api/teams', { withCredentials: true }),
-          axios.get('http://localhost:3000/api/projects', { withCredentials: true })
+          axios.get('https://dev-trial-7mpp.onrender.com/api/teams', { withCredentials: true }),
+          axios.get('https://dev-trial-7mpp.onrender.com/api/projects', { withCredentials: true })
         ])
         setTeams(tRes.data?.teams || [])
         setProjects(pRes.data?.projects || [])
@@ -208,7 +208,7 @@ const Teams = () => {
   }, [])
 
   const saveTeam = async (id, payload) => {
-    const res = await axios.put(`http://localhost:3000/api/teams/${id}`, payload, { withCredentials: true })
+    const res = await axios.put(`https://dev-trial-7mpp.onrender.com/api/teams/${id}`, payload, { withCredentials: true })
     const updated = res.data?.team
     setTeams(prev => prev.map(t => t._id === id ? updated : t))
   }

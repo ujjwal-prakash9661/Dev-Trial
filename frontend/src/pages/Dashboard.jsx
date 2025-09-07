@@ -67,7 +67,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const controller = new AbortController()
-    const base = import.meta?.env?.VITE_API_URL || 'http://localhost:3000'
+    const base = import.meta?.env?.VITE_API_URL || 'https://dev-trial-7mpp.onrender.com'
 
     const fetchAll = async () => {
       try {

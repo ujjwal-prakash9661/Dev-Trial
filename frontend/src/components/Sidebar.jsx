@@ -18,7 +18,7 @@ const Sidebar = () => {
   useEffect(() => {
     const loadUser = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/api/auth/me', { withCredentials: true })
+        const res = await axios.get('https://dev-trial-7mpp.onrender.com/api/auth/me', { withCredentials: true })
         setUser(res.data || null)
       } catch (_) {
         setUser(null)
@@ -54,7 +54,7 @@ const Sidebar = () => {
           <button
             onClick={async () => {
               try {
-                await axios.post('http://localhost:3000/api/auth/logout', {}, { withCredentials: true })
+                await axios.post('https://dev-trial-7mpp.onrender.com/api/auth/logout', {}, { withCredentials: true })
                 window.location.href = 'http://localhost:5173/'
               } catch (_) {}
             }}
