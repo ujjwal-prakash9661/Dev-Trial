@@ -21,7 +21,7 @@ const ProjectDetail = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await axios.get(`https://dev-trial-7mpp.onrender.com/api/projects/${id}`, {
+        const res = await axios.get(`https://dev-trial-1.onrender.com/api/projects/${id}`, {
           withCredentials: true
         })
 
@@ -143,7 +143,7 @@ const ProjectDetail = () => {
                         status: formDraft.status,
                       }
                       const res = await axios.put(
-                        `https://dev-trial-7mpp.onrender.com/api/projects/${id}`,
+                        `https://dev-trial-1.onrender.com/api/projects/${id}`,
                         payload,
                         { withCredentials: true }
                       )
@@ -168,7 +168,7 @@ const ProjectDetail = () => {
                 if (!confirm("Delete this project?")) return
                 try {
                   await axios.delete(
-                    `https://dev-trial-7mpp.onrender.com/api/projects/${id}`,
+                    `https://dev-trial-1.onrender.com/api/projects/${id}`,
                     { withCredentials: true }
                   )
                   navigate("/projects")

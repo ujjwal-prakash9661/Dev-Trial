@@ -62,7 +62,7 @@ const Projects = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await axios.get('https://dev-trial-7mpp.onrender.com/api/projects', { withCredentials: true })
+        const res = await axios.get('https://dev-trial-1.onrender.com/api/projects', { withCredentials: true })
         setProjects(res.data?.projects || [])
       } catch (err) {
         if (err?.response?.status === 404) {
@@ -118,7 +118,7 @@ const Projects = () => {
         ? { status: 'Completed', progress: 100 }
         : { status: 'In Progress', progress: 0 }
 
-      const res = await axios.put(`https://dev-trial-7mpp.onrender.com/api/projects/${id}`,
+      const res = await axios.put(`https://dev-trial-1.onrender.com/api/projects/${id}`,
         payload,
         { withCredentials: true }
       )

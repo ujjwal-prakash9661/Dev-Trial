@@ -50,7 +50,7 @@ const CreateTask = () => {
 
     try {
       setSubmitting(true)
-      await axios.post('https://dev-trial-7mpp.onrender.com/api/tasks', payload, {
+      await axios.post('https://dev-trial-1.onrender.com/api/tasks', payload, {
         withCredentials: true
       })
       navigate('/tasks')

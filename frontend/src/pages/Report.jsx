@@ -196,7 +196,7 @@ const Report = () => {
   useEffect(() => {
     const controller = new AbortController()
     let mounted = true
-    const base = import.meta?.env?.VITE_API_URL || 'https://dev-trial-7mpp.onrender.com'
+    const base = import.meta?.env?.VITE_API_URL || 'https://dev-trial-1.onrender.com'
     const run = async () => {
       try {
         const [p, t] = await Promise.all([

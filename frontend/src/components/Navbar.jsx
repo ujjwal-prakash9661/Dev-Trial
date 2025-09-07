@@ -31,7 +31,7 @@ const Navbar = ({ brand = 'Dev-Trial', showSearch = false }) => {
     // Load current user
     const loadUser = async () => {
       try {
-        const res = await axios.get('https://dev-trial-7mpp.onrender.com/api/auth/me', { withCredentials: true })
+        const res = await axios.get('https://dev-trial-1.onrender.com/api/auth/me', { withCredentials: true })
         setUser(res.data || null)
       } catch (_) {
         setUser(null)
@@ -41,7 +41,7 @@ const Navbar = ({ brand = 'Dev-Trial', showSearch = false }) => {
     // Build simple notifications (e.g., upcoming task deadlines)
     const loadNotifications = async () => {
       try {
-        const res = await axios.get('https://dev-trial-7mpp.onrender.com/api/tasks', { withCredentials: true })
+        const res = await axios.get('https://dev-trial-1.onrender.com/api/tasks', { withCredentials: true })
         const tasks = res.data?.tasks || []
         const now = new Date()
         const soon = tasks
@@ -91,9 +91,9 @@ const Navbar = ({ brand = 'Dev-Trial', showSearch = false }) => {
     debounceRef.current = setTimeout(async () => {
       try {
         const [p, t, tm] = await Promise.all([
-          axios.get('https://dev-trial-7mpp.onrender.com/api/projects', { withCredentials: true }).catch(() => ({ data: { projects: [] } })),
-          axios.get('https://dev-trial-7mpp.onrender.com/api/tasks', { withCredentials: true }).catch(() => ({ data: { tasks: [] } })),
-          axios.get('https://dev-trial-7mpp.onrender.com/api/teams', { withCredentials: true }).catch(() => ({ data: { teams: [] } }))
+          axios.get('https://dev-trial-1.onrender.com/api/projects', { withCredentials: true }).catch(() => ({ data: { projects: [] } })),
+          axios.get('https://dev-trial-1.onrender.com/api/tasks', { withCredentials: true }).catch(() => ({ data: { tasks: [] } })),
+          axios.get('https://dev-trial-1.onrender.com/api/teams', { withCredentials: true }).catch(() => ({ data: { teams: [] } }))
         ])
         const term = q.toLowerCase()
         const projs = (p.data?.projects || []).filter(x => (x.title || '').toLowerCase().includes(term))
@@ -268,7 +268,7 @@ const Navbar = ({ brand = 'Dev-Trial', showSearch = false }) => {
                 <button
                   onClick={async () => {
                     try {
-                      await axios.post('https://dev-trial-7mpp.onrender.com/api/auth/logout', {}, { withCredentials: true })
+                      await axios.post('https://dev-trial-1.onrender.com/api/auth/logout', {}, { withCredentials: true })
                       window.location.href = 'http://localhost:5173/'
                     } catch (_) {}
                   }}

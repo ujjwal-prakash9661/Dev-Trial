@@ -17,7 +17,7 @@ const CreateTeam = () => {
   useEffect(() => {
     const loadProjects = async () => {
       try {
-        const res = await axios.get('https://dev-trial-7mpp.onrender.com/api/projects', { withCredentials: true })
+        const res = await axios.get('https://dev-trial-1.onrender.com/api/projects', { withCredentials: true })
         setProjects(res.data?.projects || [])
       } catch (e) {
         console.error('Failed to load projects', e)
@@ -48,7 +48,7 @@ const CreateTeam = () => {
         projects: selectedProjects,
       }
 
-      await axios.post('https://dev-trial-7mpp.onrender.com/api/teams', payload, { withCredentials: true })
+      await axios.post('https://dev-trial-1.onrender.com/api/teams', payload, { withCredentials: true })
       navigate('/teams')
     } catch (err) {
       console.error('Create team failed', err)

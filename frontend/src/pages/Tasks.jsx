@@ -117,7 +117,7 @@ const Tasks = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const res = await axios.get('https://dev-trial-7mpp.onrender.com/api/tasks', { withCredentials: true })
+        const res = await axios.get('https://dev-trial-1.onrender.com/api/tasks', { withCredentials: true })
         setTasks(res.data?.tasks || [])
       } catch (err) {
         if (err?.response?.status === 404) {
@@ -173,7 +173,7 @@ const Tasks = () => {
         ? { status: 'Done', progress: 100 }
         : { status: 'In Progress', progress: 0 }
 
-      const res = await axios.put(`https://dev-trial-7mpp.onrender.com/api/tasks/${id}`,
+      const res = await axios.put(`https://dev-trial-1.onrender.com/api/tasks/${id}`,
         payload,
         { withCredentials: true }
       )
@@ -243,7 +243,7 @@ const Tasks = () => {
             onToggleComplete={toggleComplete}
             onInlineSave={async (id, payload) => {
               try {
-                const res = await axios.put(`https://dev-trial-7mpp.onrender.com/api/tasks/${id}`, payload, { withCredentials: true })
+                const res = await axios.put(`https://dev-trial-1.onrender.com/api/tasks/${id}`, payload, { withCredentials: true })
                 const updated = res.data?.task
                 setTasks(prev => prev.map(task => task._id === id ? updated : task))
               } catch (err) {

@@ -110,7 +110,7 @@ async function githubCallBack(req, res)
 
     res.cookie('token', token)
 
-    res.redirect("https://dev-trial-7mpp.onrender.com/dashboard")
+    res.redirect("https://dev-trial-1.onrender.com/dashboard")
 
     // return res.status(200).json({
     //     message : "Logged In Successfully",
