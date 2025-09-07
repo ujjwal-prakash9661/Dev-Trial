@@ -38,8 +38,9 @@ const ProjectDetail = () => {
           priority: p?.priority || "Low",
           progress: Number(p?.progress || 0),
           status: p?.status || "In Progress",
-          teamMembersString: Array.isArray(p?.teamMembers) && p.teamMembers.length > 0
-            ? p.teamMembers.map(m => (m?._id || m)).join(', ')
+          // Prefer rawTeamMemberIds so edits target only direct members
+          teamMembersString: Array.isArray(p?.rawTeamMemberIds) && p.rawTeamMemberIds.length > 0
+            ? p.rawTeamMemberIds.join(', ')
             : "",
         })
       } catch (err) {
@@ -127,8 +128,8 @@ const ProjectDetail = () => {
                       priority: project.priority || "Low",
                       progress: Number(project.progress || 0),
                       status: project.status || "In Progress",
-                      teamMembersString: Array.isArray(project.teamMembers) && project.teamMembers.length > 0
-                        ? project.teamMembers.map(m => (m?._id || m)).join(', ')
+                      teamMembersString: Array.isArray(project.rawTeamMemberIds) && project.rawTeamMemberIds.length > 0
+                        ? project.rawTeamMemberIds.join(', ')
                         : "",
                     })
                   }}
@@ -163,17 +164,16 @@ const ProjectDetail = () => {
                         payload,
                         { withCredentials: true }
                       )
-                      // Ensure we stay on the same detail route and refresh data from server
-                      const updated = res.data?.project
-                      if (updated?._id) {
-                        navigate(`/projects/${updated._id}`, { replace: true })
-                        // Refetch latest after navigation
-                        setTimeout(() => window.location.reload(), 0)
-                      } else {
-                        // Fallback: update local state
-                        setProject({ ...project, ...payload })
-                        setIsEditing(false)
-                      }
+                      // Update local state immediately for smooth UX
+                      const updated = res.data?.project || { ...project, ...payload }
+                      setProject(updated)
+                      setFormDraft(v => ({
+                        ...v,
+                        teamMembersString: Array.isArray(updated?.rawTeamMemberIds) && updated.rawTeamMemberIds.length > 0
+                          ? updated.rawTeamMemberIds.join(', ')
+                          : '',
+                      }))
+                      setIsEditing(false)
                     } catch (err) {
                       console.error("Failed to save changes", err)
                       alert("Failed to save changes")

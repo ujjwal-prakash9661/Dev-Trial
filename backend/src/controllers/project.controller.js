@@ -198,6 +198,10 @@ async function getProjectById(req, res)
 
     const mergedMembers = Array.from(memberMap.values())
     const projectObj = project.toObject()
+    // Expose raw (direct) team members for editing on client
+    projectObj.rawTeamMembers = existingMembers
+    projectObj.rawTeamMemberIds = existingMembers.map(m => String(m._id || m))
+    // Keep merged list for display
     projectObj.teamMembers = mergedMembers
 
     res.status(200).json({
